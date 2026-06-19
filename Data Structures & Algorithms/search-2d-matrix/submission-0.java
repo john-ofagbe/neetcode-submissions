@@ -1,0 +1,46 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int rowToSearch = getRowIndex(matrix, target);
+        System.out.println("row to search: " + rowToSearch);
+        if (rowToSearch == -1) {
+            return false;
+        }
+        int left = 0; 
+        int right = matrix[rowToSearch].length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (matrix[rowToSearch][mid] == target) {
+                return true;
+            } else if (matrix[rowToSearch][mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
+
+    }
+
+    private int getRowIndex(int[][] matrix, int target) {
+        int topRow = 0;
+        int bottomRow = matrix.length - 1;
+
+        while (topRow <= bottomRow) {
+            int midRow = topRow + (bottomRow - topRow) / 2; 
+            int firstItem = matrix[midRow][0];
+            int lastItem = matrix[midRow][matrix[midRow].length - 1];
+            System.out.println("firstItem: " + firstItem + " lastItem: " + lastItem + " target: " + target);
+            System.out.println("midRow: " + midRow + " : " + (firstItem <= target && lastItem >= target));
+            if (firstItem <= target && lastItem >= target) {
+                return midRow;
+            } else if (firstItem < target) {
+                topRow = midRow + 1;
+            } else {
+                bottomRow = midRow - 1;
+            }
+        }
+
+        return -1;
+    }
+}
